@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 
 
 Konstruktor = tkinter.Tk()
-Konstruktor.geometry("500x500")
+Konstruktor.geometry("600x300")
 Konstruktor.title("Tytuł aplikacji")
 
 def DodajTekst():
