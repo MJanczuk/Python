@@ -3,5 +3,7 @@
 Struktury
 
 Program działa w wybranym folderze roboczym. Tworzy w nim folder: „Dane surowe”, „Dane wejściowe”, „Punkty sporne”, „Komentarze”. W przypadku potrzeby przeskalowania danych uzyskanych z urządzenia pomiarowego należy umieścić nieprzetworzone dane w folderze „Dane surowe”. Program dokonuje analizy danych umieszczonych w folderze „Dane wejściowe”, i wszystkie dane pomiarowe które nie spełniają kryteriów diagnostycznych umieszczane są w folderze „Punkty sporne”. Po zakończeniu analizy danych, program rozpoczyna analizę punktów spornych w celu zidentyfikowania charakterystycznych struktur występujących w rurociągach
+Wszystkie komentarze eksperta wprowadzone są w folderze "Komentarze", w pliku zawarte są dodatkowo aktualne ustawinenia wyświetlanego pliku co w przypadku wywołania komentarza przywołuje ustawione przez eksperat skale
 
+Sposób postępowania w przypadku nowych badań. Program umożliwi utworzenie nowego folderu dla danego badanego fragmentu
 """

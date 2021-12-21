@@ -1,5 +1,4 @@
 import os
-
 if not os.path.exists('Dane surowe'):
     os.makedirs('Dane surowe')
 if not os.path.exists('Dane wejściowe'):
