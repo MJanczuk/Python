@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 
 
 Konstruktor = tkinter.Tk()
-Konstruktor.geometry("600x300")
+Konstruktor.geometry("800x300")
 Konstruktor.title("Tytuł aplikacji")
 
 def DodajTekst():
@@ -18,11 +18,14 @@ def DodajTekst():
     #tkinter.Label(Konstruktor, text=Wpis.get()).grid()
 
 def pop():
-    wynikpopup = messagebox.askyesno("Tytuł", "Treść")
-    if wynikpopup == 1:
-        tkinter.Label(Konstruktor, text="Tak").grid()
-    else:
-        tkinter.Label(Konstruktor, text="Nie").grid()
+    if 1==0:
+        wynikpopup = messagebox.askyesno("Tytuł", "Treść")
+        if wynikpopup == 1:
+            tkinter.Label(Konstruktor, text="Tak").grid()
+        else:
+            tkinter.Label(Konstruktor, text="Nie").grid()
+    for e in Dane['Kanaly']:
+        tkinter.Label(ListaKanalow, text=e).grid()
 
 def KonstruktorNowegoOkna():
     NowyKonstruktor = tkinter.Toplevel()
@@ -38,7 +41,7 @@ TekstGlowny = tkinter.Label(Konstruktor, text="Hello, World")
 Przycisk = tkinter.Button(Konstruktor, text="Exit", command=DodajTekst)
 Wpis = tkinter.Entry(Konstruktor)
 CB = tkinter.StringVar()
-
+ListaKanalow = tkinter.LabelFrame(Konstruktor)
 CheckButt = tkinter.Checkbutton(Konstruktor, text="Ping", variable=CB, onvalue="Ping", offvalue="No Ping")
 CheckButt.deselect()
 
@@ -49,7 +52,13 @@ CombBox = ttk.Combobox(Konstruktor,value=Opcje)
 
 PrzyciskNoweOkno = tkinter.Button(Konstruktor, text="Nowe okno", command=KonstruktorNowegoOkna)
 
-filenamebox = filedialog.askopenfilename(initialdir="/", title="szukane" , filetypes=(("PNG","*.png"),("ALL","*.*")))
+filenamebox = filedialog.askopenfilename(initialdir="/", title="Rejestracja" , filetypes=(("REC","*.rec"),("ALL","*.*")))
+import LP
+Dane = LP.OdczytPliku(filenamebox)
+
+import GRAF
+#GRAF.Standard((Dane['X'],Dane['Y']))
+tkinter.Label(Konstruktor,text=filenamebox).grid()
 TekstGlowny.grid(row=0, column=0)
 Przycisk.grid(row=0, column=1)
 Wpis.grid(row=0, column=2)
@@ -57,5 +66,7 @@ CheckButt.grid(row=0, column=3)
 PopButt.grid(row=0, column=4)
 CombBox.grid(row=0, column=5)
 PrzyciskNoweOkno.grid(row=0, column=6)
+
+ListaKanalow.grid(row=1, column=6)
 
 Konstruktor.mainloop()

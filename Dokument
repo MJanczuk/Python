@@ -6,4 +6,14 @@ Program działa w wybranym folderze roboczym. Tworzy w nim folder: „Dane surow
 Wszystkie komentarze eksperta wprowadzone są w folderze "Komentarze", w pliku zawarte są dodatkowo aktualne ustawinenia wyświetlanego pliku co w przypadku wywołania komentarza przywołuje ustawione przez eksperat skale
 
 Sposób postępowania w przypadku nowych badań. Program umożliwi utworzenie nowego folderu dla danego badanego fragmentu
+
+Funkcjonalność:
+-Wyświetlenie jedynie wybranych kanałów
+-Wycięcie fragmentu rejestracji do dalszej analizy
+-Rozdział kanałów pomiędzy własne wykresy z własnymi skalami Y i schynchronizowanym czasem na osi X
+-Wyświetlenie wartości średniej z danego kanału, maksymalnej/minimalnej
+-Możliwość wyświetlenie wybranego obszaru w powiększeniu
+-Wyznaczenie czasu pomiędzy wybranymi wartosciami (Możliwość wybrania wartości Max i Min)
+-Wycięcie obszaru podczas którego następowała znaczna zmiana wartości (Charakterystyka statyczna)
+-Możliwość utworzenia relacji X/Y miedzy kanałami
 """

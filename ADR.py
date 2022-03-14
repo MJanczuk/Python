@@ -1,15 +1,19 @@
-from os import listdir
-from os.path import isfile, join
 
-mypath = './Dane surowe'
-#mypath = './Python'
-onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-print(onlyfiles)
+def S1(Path):
+    from os import listdir
+    from os.path import isfile, join
+    onlyfiles = [f for f in listdir(Path) if isfile(join(Path, f))]
+    return onlyfiles
 
-from os import walk
+def S2(Path):
+    from os import walk
+    filenames = next(walk(Path), (None, None, []))[2]  # [] if no file
+    return filenames
 
-filenames = next(walk(mypath), (None, None, []))[2]  # [] if no file
-print(filenames)
+def S3(Path):
+    import glob
+    return(glob.glob(Path+'/*.rec'))
 
-import glob
-print(glob.glob(mypath+'/*.rec'))
+#Test
+#mypath = './Dane surowe'
+#print(S1(mypath))
