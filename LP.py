@@ -51,7 +51,10 @@ def main():
                 tkinter.Label(Konstruktor, text="Tak").grid()
             else:
                 tkinter.Label(Konstruktor, text="Nie").grid()
-        tkinter.Label(Konstruktor, text=(Kanaly.selection_get())).grid()
+        a = Kanaly.curselection()
+        tkinter.Label(Konstruktor, text=a).grid()
+        for x in a:
+            tkinter.Label(Konstruktor, text=Kanaly.get(x)).grid()
 
 
         #import GRAF
