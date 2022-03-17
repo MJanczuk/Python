@@ -59,13 +59,13 @@ def Polar(A):
 def BiPolar(fi, Y1, Y2):
     pass
 
-Standard(DummyCos())
+
 '''
 Zakres(DummyRand())
 Polar(DummyPolar())
 '''
 def main():
-    pass
+    Standard(DummyCos())
 
 
 if __name__ == '__main__':

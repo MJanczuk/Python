@@ -1,4 +1,4 @@
-def OdczytPliku(SciezkaPliku):
+def OdczytPliku(SciezkaPliku = './Dane surowe/P1.rec'):
     with open(SciezkaPliku, "r") as Odczyt:
         Plik = {}
         Plik['Wersja'] = Odczyt.readline()[9:-1]
@@ -28,6 +28,8 @@ def OdczytPliku(SciezkaPliku):
         Plik['Y'] = Y
         return(Plik)
 
+
+
 def onselect(evt):
     # Note here that Tkinter passes an event object to onselect()
     w = evt.widget
@@ -44,35 +46,44 @@ def main():
     Konstruktor.geometry("1000x300")
     Konstruktor.title("Import danych")
 
-    def pop():
-        if 1==0:
-            wynikpopup = messagebox.askyesno("Tytuł", "Treść")
-            if wynikpopup == 1:
-                tkinter.Label(Konstruktor, text="Tak").grid()
-            else:
-                tkinter.Label(Konstruktor, text="Nie").grid()
-        a = Kanaly.curselection()
-        tkinter.Label(Konstruktor, text=a).grid()
-        for x in a:
-            tkinter.Label(Konstruktor, text=Kanaly.get(x)).grid()
+    def RysujWykres():
+        from matplotlib.backends.backend_tkagg import (
+            FigureCanvasTkAgg, NavigationToolbar2Tk)
+        # Implement the default Matplotlib key bindings.
+        from matplotlib.backend_bases import key_press_handler
+        from matplotlib.figure import Figure
 
-
-        #import GRAF
-        #GRAF.Standard(Dane)
-
-
+        fig = Figure(figsize=(5, 4), dpi=200)
+        ax = fig.add_subplot()
+        for a in Kanaly.curselection():
+            line, = ax.plot(Dane['X'][a],Dane['Y'][a])
+        ax.set_xlabel("[s]")
+        ax.set_ylabel("[%]")
+        canvas = FigureCanvasTkAgg(fig, master=Konstruktor)  # A tk.DrawingArea.
+        canvas.draw()
+        canvas.mpl_connect("key_press_event", lambda event: print(f"you pressed {event.key}"))
+        canvas.mpl_connect("key_press_event", key_press_handler)
+        canvas.get_tk_widget().grid(row=1, column=1)
+    def ImportDanych():
+        filenamebox = filedialog.askopenfilename(initialdir="/", title="Rejestracja", filetypes=(("REC", "*.rec"), ("ALL", "*.*")))
+        import LP
+        Dane = LP.OdczytPliku(filenamebox)
+        Kanaly.bind('<<ListboxSelect>>', onselect)
+        for e in Dane['Kanaly']:
+            Kanaly.insert(tkinter.END, e)
 
     filenamebox = filedialog.askopenfilename(initialdir="/", title="Rejestracja" , filetypes=(("REC","*.rec"),("ALL","*.*")))
     import LP
-    Dane = LP.OdczytPliku(filenamebox)
+    Dane = LP.OdczytPliku()
 
     tkinter.Label(Konstruktor,text=filenamebox).grid(column=0,row=0)
-    PopButt = tkinter.Button(Konstruktor, text="Odczyt", command=pop).grid(column=1,row=0)
+    NowyWykres = tkinter.Button(Konstruktor, text="Wykres", command=RysujWykres).grid(column=0,row=1)
+    NoweDane = tkinter.Button(Konstruktor, text="Dane", command=ImportDanych).grid(column=0, row=2)
     Kanaly = tkinter.Listbox(Konstruktor, selectmode='multiple')
     Kanaly.bind('<<ListboxSelect>>', onselect)
     for e in Dane['Kanaly']:
-        Kanaly.insert(tkinter.END,e)
-    Kanaly.grid(column=0,row=1)
+        Kanaly.insert(tkinter.END, e)
+    Kanaly.grid(column=0,row=3)
     Konstruktor.mainloop()
 
 if __name__ == '__main__':

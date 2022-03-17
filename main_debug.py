@@ -4,28 +4,70 @@ from tkinter import filedialog
 from tkinter import ttk
 from PIL import ImageTk, Image
 
+import TKEasy
+
 
 Konstruktor = tkinter.Tk()
-Konstruktor.geometry("800x300")
-Konstruktor.title("Tytuł aplikacji")
+Konstruktor.geometry("1250x900")
+Konstruktor.title("Program do obrabiania danych")
 
-def DodajTekst():
+def DodajTekst(CB):
     #tkinter.Label(Konstruktor, text=CB.get()).grid()
     if CB.get() == "Ping":
         tkinter.Label(Konstruktor, text="1").grid()
     else:
         tkinter.Label(Konstruktor, text="0").grid()
     #tkinter.Label(Konstruktor, text=Wpis.get()).grid()
+def RysujWykres():
+    from matplotlib.backends.backend_tkagg import (
+        FigureCanvasTkAgg, NavigationToolbar2Tk)
+    # Implement the default Matplotlib key bindings.
+    from matplotlib.backend_bases import key_press_handler
+    from matplotlib.figure import Figure
 
-def pop():
-    if 1==0:
-        wynikpopup = messagebox.askyesno("Tytuł", "Treść")
-        if wynikpopup == 1:
-            tkinter.Label(Konstruktor, text="Tak").grid()
-        else:
-            tkinter.Label(Konstruktor, text="Nie").grid()
-    for e in Dane['Kanaly']:
-        tkinter.Label(ListaKanalow, text=e).grid()
+    fig = Figure(figsize=(5, 4), dpi=200)
+    ax = fig.add_subplot()
+    for a in Kanaly.curselection():
+        line, = ax.plot(Dane['X'][a], Dane['Y'][a], label=Kanaly.get(a))
+        line.set_linewidth(1)
+    ax.grid(True)
+    ax.legend(bbox_to_anchor=(1,0), loc="lower right",bbox_transform=fig.transFigure, ncol=3)
+    if t1.get()>0 and t2.get()>0:
+        ax.set_xlim(xmin=t1, xmax=t2)
+    ax.set_title(tytul)
+    canvas = FigureCanvasTkAgg(fig, master=Konstruktor)  # A tk.DrawingArea.
+    canvas.draw()
+    toolbar = NavigationToolbar2Tk(canvas, Konstruktor, pack_toolbar=False)
+    toolbar.update()
+    #canvas.mpl_connect("key_press_event", lambda event: print(f"you pressed {event.key}"))
+    #canvas.mpl_connect("key_press_event", key_press_handler)
+    canvas.get_tk_widget().grid(row=1,pady=10,padx=10)
+    #toolbar.grid(row=3)
+
+def RysujWykresEv(evt):
+    from matplotlib.backends.backend_tkagg import (
+        FigureCanvasTkAgg, NavigationToolbar2Tk)
+    # Implement the default Matplotlib key bindings.
+    from matplotlib.backend_bases import key_press_handler
+    from matplotlib.figure import Figure
+
+    fig = Figure(figsize=(6, 3), dpi=200)
+    ax = fig.add_subplot()
+    for a in Kanaly.curselection():
+        line, = ax.plot(Dane['X'][a], Dane['Y'][a], label=Kanaly.get(a))
+        line.set_linewidth(1)
+    ax.grid(True)
+    ax.legend(bbox_to_anchor=(1,0), loc="lower right",bbox_transform=fig.transFigure, ncol=3)
+    ax.set_xlim(xmin=t1.get(), xmax=t2.get())
+    ax.set_title(tytul.get())
+    canvas = FigureCanvasTkAgg(fig, master=Konstruktor)  # A tk.DrawingArea.
+    canvas.draw()
+    toolbar = NavigationToolbar2Tk(canvas, Konstruktor, pack_toolbar=False)
+    toolbar.update()
+    #canvas.mpl_connect("key_press_event", lambda event: print(f"you pressed {event.key}"))
+    #canvas.mpl_connect("key_press_event", key_press_handler)
+    canvas.get_tk_widget().grid(row=1,pady=10,padx=10)
+    #toolbar.grid(row=3)
 
 def KonstruktorNowegoOkna():
     NowyKonstruktor = tkinter.Toplevel()
@@ -35,38 +77,51 @@ def KonstruktorNowegoOkna():
     insLabel = tkinter.Label(NowyKonstruktor,image=Obrazek, text="Nowe okno").pack()
     NowyKonstruktor.mainloop()
 
+
 Okno_Glowne = tkinter.Frame(Konstruktor, borderwidth=2)
 
-TekstGlowny = tkinter.Label(Konstruktor, text="Hello, World")
-Przycisk = tkinter.Button(Konstruktor, text="Exit", command=DodajTekst)
-Wpis = tkinter.Entry(Konstruktor)
-CB = tkinter.StringVar()
-ListaKanalow = tkinter.LabelFrame(Konstruktor)
-CheckButt = tkinter.Checkbutton(Konstruktor, text="Ping", variable=CB, onvalue="Ping", offvalue="No Ping")
-CheckButt.deselect()
+#TekstGlowny = tkinter.Label(Konstruktor, text="Hello, World")
+#PrzyciskExit = tkinter.Button(Konstruktor, text="Exit", command=quit)
 
-PopButt = tkinter.Button(Konstruktor, text="Popup", command=pop)
+#CB = tkinter.StringVar()
+#CheckButt = tkinter.Checkbutton(Konstruktor, text="Ping", variable=CB, onvalue="Ping", offvalue="No Ping")
+#CheckButt.deselect()
 
-Opcje = ["Pon","Wt","Śr",]
-CombBox = ttk.Combobox(Konstruktor,value=Opcje)
+#Opcje = ["Pon","Wt","Śr",]
+#CombBox = ttk.Combobox(Konstruktor,value=Opcje)
 
-PrzyciskNoweOkno = tkinter.Button(Konstruktor, text="Nowe okno", command=KonstruktorNowegoOkna)
+#PrzyciskNoweOkno = tkinter.Button(Konstruktor, text="Nowe okno", command=KonstruktorNowegoOkna)
 
 filenamebox = filedialog.askopenfilename(initialdir="/", title="Rejestracja" , filetypes=(("REC","*.rec"),("ALL","*.*")))
 import LP
 Dane = LP.OdczytPliku(filenamebox)
 
+t1 = tkinter.IntVar()
+t2 = tkinter.IntVar()
+tytul = tkinter.StringVar('')
 import GRAF
 #GRAF.Standard((Dane['X'],Dane['Y']))
-tkinter.Label(Konstruktor,text=filenamebox).grid()
-TekstGlowny.grid(row=0, column=0)
-Przycisk.grid(row=0, column=1)
-Wpis.grid(row=0, column=2)
-CheckButt.grid(row=0, column=3)
-PopButt.grid(row=0, column=4)
-CombBox.grid(row=0, column=5)
-PrzyciskNoweOkno.grid(row=0, column=6)
 
-ListaKanalow.grid(row=1, column=6)
+#PrzyciskExit.grid(column=2,row=0)
+
+
+Kanaly = tkinter.Listbox(Konstruktor, selectmode='multiple')
+Kanaly.bind('<<ListboxSelect>>', RysujWykresEv)
+for e in Dane['Kanaly']:
+    Kanaly.insert(tkinter.END, e)
+Kanaly.grid(column=1, row=1)
+ttk.Entry(Konstruktor,textvariable=tytul).grid()
+ttk.Entry(Konstruktor,textvariable=t1).grid()
+ttk.Entry(Konstruktor,textvariable=t2).grid()
+RysujWykres()
+
+
+
+tkinter.Label(Konstruktor,text=(Dane['Tytul']+'       '+Dane['Czas'])).grid(column=0,row=0)
+
+
+
+
+
 
 Konstruktor.mainloop()
