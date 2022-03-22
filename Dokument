@@ -1,5 +1,13 @@
 """
 
+Struktury charakterystyczne rurociągu to elementy konstrukcyjne, elementy aparatury kontrolno pomiarowej zainstalowane na rurociągu, przyłączeń oraz trójników a także charakterystycznych struktur specjalnych instalowanych w celu lepszej identyfikacji położenia inteligentnego tłoka
+
+Program działa w wybranym folderze roboczym. Tworzy w nim folder: „Dane surowe”, „Dane wejściowe”, „Punkty sporne”, „Komentarze”. W przypadku potrzeby przeskalowania danych uzyskanych z urządzenia pomiarowego należy umieścić nieprzetworzone dane w folderze „Dane surowe”. Program dokonuje analizy danych umieszczonych w folderze „Dane wejściowe”, i wszystkie dane pomiarowe które nie spełniają kryteriów diagnostycznych umieszczane są w folderze „Punkty sporne”. Po zakończeniu analizy danych, program rozpoczyna analizę punktów spornych w celu zidentyfikowania charakterystycznych struktur występujących w rurociągach
+
+Okno programu podzielone jest na cztery części
+
+""""""
+
 Struktury
 
 Program działa w wybranym folderze roboczym. Tworzy w nim folder: „Dane surowe”, „Dane wejściowe”, „Punkty sporne”, „Komentarze”. W przypadku potrzeby przeskalowania danych uzyskanych z urządzenia pomiarowego należy umieścić nieprzetworzone dane w folderze „Dane surowe”. Program dokonuje analizy danych umieszczonych w folderze „Dane wejściowe”, i wszystkie dane pomiarowe które nie spełniają kryteriów diagnostycznych umieszczane są w folderze „Punkty sporne”. Po zakończeniu analizy danych, program rozpoczyna analizę punktów spornych w celu zidentyfikowania charakterystycznych struktur występujących w rurociągach

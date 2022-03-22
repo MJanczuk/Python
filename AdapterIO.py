@@ -2,13 +2,15 @@ import tkinter
 
 
 def IEN_v1(SciezkaPliku = './Dane surowe/P1.rec'):
+    if SciezkaPliku == '':
+        SciezkaPliku = './Dane surowe/P1.rec'
     with open(SciezkaPliku, "r") as Odczyt:
         Plik = {}
         Plik['Wersja'] = Odczyt.readline()[9:-1]
         Plik['Tytul'] = Odczyt.readline()[7:-1]
         Plik['Czas'] = Odczyt.readline()[7:-1]
         Plik['Kanaly'] = (Odczyt.readline()[7:-1]).split('\t')
-        Plik['Kolory'] = Odczyt.readline()[7:-1]
+        Plik['Kolory'] = Odczyt.readline()[8:-1].split('\t')
         Odczyt.readline()
         l = len(Plik['Kanaly'])
         M = []
@@ -43,25 +45,57 @@ def main():
 
 
     TestGui = tkinter.Tk()
-    TestGui.geometry("1000x300")
+    TestGui.geometry("900x700")
     TestGui.title("Import danych")
     W = tkinter.StringVar()
     T = tkinter.StringVar()
     C = tkinter.StringVar()
-    K = tkinter.StringVar()
-    KL = tkinter.StringVar()
-    tkinter.Entry(TestGui,textvariable=W).grid(sticky=tkinter.E)
-    tkinter.Entry(TestGui,textvariable=T).grid(sticky=tkinter.E)
-    tkinter.Entry(TestGui,textvariable=C).grid(sticky=tkinter.E)
-    tkinter.Entry(TestGui,textvariable=K).grid(sticky=tkinter.E)
-    tkinter.Entry(TestGui,textvariable=KL).grid(sticky=tkinter.E)
 
-    Dane = IEN_v1()
+    tkinter.Label(TestGui,text='Wersja:').grid(row=0,column=0,sticky=tkinter.E)
+    tkinter.Entry(TestGui,textvariable=W,width=30).grid(row=0,column=1,sticky=tkinter.E)
+    tkinter.Label(TestGui, text='Tytuł:').grid(row=1, column=0, sticky=tkinter.E)
+    tkinter.Entry(TestGui,textvariable=T,width=30).grid(row=1,column=1,sticky=tkinter.E)
+    tkinter.Label(TestGui, text='Czas:').grid(row=2, column=0, sticky=tkinter.E)
+    tkinter.Entry(TestGui,textvariable=C,width=30).grid(row=2,column=1,sticky=tkinter.E)
+    K = tkinter.Listbox(TestGui,width=30,height=30)
+    KL = tkinter.Listbox(TestGui,width=10,height=30)
+
+    filenamebox = tkinter.filedialog.askopenfilename(initialdir="/", title="Rejestracja",filetypes=(("REC", "*.rec"), ("ALL", "*.*")))
+
+    Dane = IEN_v1(filenamebox)
     W.set(Dane['Wersja'])
     T.set(Dane['Tytul'])
     C.set(Dane['Czas'])
-    K.set(Dane['Kanaly'])
-    KL.set(Dane['Kolory'])
+    for e in Dane['Kanaly']:
+        K.insert(tkinter.END,e)
+    K.grid(column=1,row=3, sticky=tkinter.E)
+
+    for e in Dane['Kolory']:
+        KL.insert(tkinter.END,e)
+    KL.grid(column=0,row=3,sticky=tkinter.E)
+
+
+    from matplotlib.backends.backend_tkagg import (
+        FigureCanvasTkAgg, NavigationToolbar2Tk)
+    # Implement the default Matplotlib key bindings.
+    from matplotlib.backend_bases import key_press_handler
+    from matplotlib.figure import Figure
+
+    fig = Figure(figsize=(3, 3), dpi=200)
+    ax = fig.add_subplot()
+    for a in range(len(Dane['X'])):
+        line, = ax.plot(Dane['X'][a], Dane['Y'][a])
+    line.set_linewidth(1)
+    ax.grid(True)
+    canvas = FigureCanvasTkAgg(fig, master=TestGui)  # A tk.DrawingArea.
+    canvas.draw()
+    toolbar = NavigationToolbar2Tk(canvas, TestGui, pack_toolbar=False)
+    toolbar.update()
+    # canvas.mpl_connect("key_press_event", lambda event: print(f"you pressed {event.key}"))
+    # canvas.mpl_connect("key_press_event", key_press_handler)
+    canvas.get_tk_widget().grid(row=0,column=2,rowspan=4, pady=10, padx=10)
+    toolbar.grid(row=5,column=2)
+
     TestGui.mainloop()
 
 
