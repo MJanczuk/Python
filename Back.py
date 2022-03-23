@@ -2,13 +2,16 @@ import tkinter as tk
 from tkinter import ttk
 
 
-
-
+def Zakres(Arr, Min, Max):
+    for i in range(len(Arr)):
+        if Arr[i] <= Min:
+            Imin = i
+        if Arr[i] <= Max:
+            Imax = i
+    return (Imin+1,Imax)
+'''
 root = tk.Tk()
 root.title('Testowe okno')
-
-
-
 class Kanal(tk.Frame):
     def __init__(self, parent, label='Rejestrowana ', Numer='0', input_var=None, input_args=None, label_args=None, **kwargs):
         super().__init__(parent, **kwargs)
@@ -32,14 +35,10 @@ class Kanal(tk.Frame):
         PoleOpcja.grid(row=0, column=2)
     def Konf(self):
         print(self.Stan.get(), self.NazwaKanalu.get(), self.OpcjaMinMax.current())
-
-
-
 Kanaly = []
 for i in range(5):
     Kanaly.append(Kanal(root,Numer=i).grid(row=i,column=i))
 
 B1 = tk.Button(root, text='Print').grid()
-
-
 tk.mainloop()
+'''

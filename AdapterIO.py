@@ -1,9 +1,14 @@
 import tkinter
 
 
-def IEN_v1(SciezkaPliku = './Dane surowe/P1.rec'):
+def IEN_v1(SciezkaPliku = './Dane surowe/P1.rec',Surowe=True):
     if SciezkaPliku == '':
         SciezkaPliku = './Dane surowe/P1.rec'
+    if '/' not in SciezkaPliku:
+        if Surowe:
+            SciezkaPliku = './Dane surowe/'+SciezkaPliku
+        else:
+            SciezkaPliku = './Dane wejściowe/' + SciezkaPliku
     with open(SciezkaPliku, "r") as Odczyt:
         Plik = {}
         Plik['Wersja'] = Odczyt.readline()[9:-1]
@@ -60,9 +65,9 @@ def main():
     K = tkinter.Listbox(TestGui,width=30,height=30)
     KL = tkinter.Listbox(TestGui,width=10,height=30)
 
-    filenamebox = tkinter.filedialog.askopenfilename(initialdir="/", title="Rejestracja",filetypes=(("REC", "*.rec"), ("ALL", "*.*")))
+    #filenamebox = tkinter.filedialog.askopenfilename(initialdir="/", title="Rejestracja",filetypes=(("REC", "*.rec"), ("ALL", "*.*")))
 
-    Dane = IEN_v1(filenamebox)
+    Dane = IEN_v1('P1.rec')
     W.set(Dane['Wersja'])
     T.set(Dane['Tytul'])
     C.set(Dane['Czas'])
