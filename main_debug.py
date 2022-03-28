@@ -70,7 +70,7 @@ Okno_Glowne = tkinter.Frame(Konstruktor, borderwidth=2)
 
 filenamebox = filedialog.askopenfilename(initialdir="/", title="Rejestracja" , filetypes=(("REC","*.rec"),("ALL","*.*")))
 import AdapterIO
-Dane = AdapterIO.OdczytPliku(filenamebox)
+Dane = AdapterIO.IEN_v1(filenamebox)
 
 t1 = tkinter.IntVar()
 t2 = tkinter.IntVar()
