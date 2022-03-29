@@ -37,19 +37,16 @@ def IEN_v1(SciezkaPliku = './Dane surowe/P1.rec',Surowe=True):
         Plik['X'] = X
         Plik['Y'] = Y
         return(Plik)
-
-from datetime import datetime
 def Wpisz(Dane,SciezkaPliku):
+    from datetime import datetime
     with open(SciezkaPliku, "w") as Zapis:
         today = datetime.now()
         NazwaPliku = ("Raport "+str(today.strftime("%dd_%mm_%Yr__%HH_%MM_%SS"))+".")
         Zapis.write(Dane)
-
-
 def Bank(SciezkaDostepu):
     pass
 
-def main():
+def main1():
     import tkinter
     from tkinter import messagebox
     from tkinter import filedialog
@@ -116,4 +113,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    pass
